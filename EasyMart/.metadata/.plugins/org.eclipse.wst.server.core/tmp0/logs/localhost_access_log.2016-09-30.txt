@@ -1,0 +1,12 @@
+127.0.0.1 - - [30/Sep/2016:18:45:18 -0300] "GET / HTTP/1.1" 404 961
+127.0.0.1 - - [30/Sep/2016:23:37:14 -0300] "GET / HTTP/1.1" 404 961
+186.9.135.134 - - [30/Sep/2016:23:37:28 -0300] "GET /EasyMart HTTP/1.1" 302 -
+186.9.135.134 - - [30/Sep/2016:23:37:28 -0300] "GET /EasyMart/ HTTP/1.1" 200 812
+186.9.135.134 - - [30/Sep/2016:23:37:29 -0300] "GET /favicon.ico HTTP/1.1" 404 983
+200.120.17.55 - - [30/Sep/2016:23:46:05 -0300] "POST /EasyMart/services/UsuarioWebService?wsdl HTTP/1.1" 200 279
+200.120.17.55 - - [30/Sep/2016:23:50:49 -0300] "GET /EasyMart/welcome.jsp HTTP/1.1" 200 2179
+200.120.17.55 - - [30/Sep/2016:23:50:49 -0300] "GET /EasyMart/librerias/js/script.js HTTP/1.1" 304 -
+200.120.17.55 - - [30/Sep/2016:23:50:49 -0300] "GET /EasyMart/librerias/css/login.css HTTP/1.1" 304 -
+200.120.17.55 - - [30/Sep/2016:23:50:49 -0300] "GET /EasyMart/librerias/css/menuCssResponsive.css HTTP/1.1" 304 -
+200.120.17.55 - - [30/Sep/2016:23:50:49 -0300] "GET /EasyMart/librerias/js/jquery.slicknav.js HTTP/1.1" 304 -
+200.120.17.55 - - [30/Sep/2016:23:50:49 -0300] "GET /EasyMart/librerias/img/easymart.png HTTP/1.1" 304 -

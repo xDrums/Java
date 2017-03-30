@@ -1,0 +1,125 @@
+package com.easy.dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+import com.easy.entidad.Boleta;
+import com.easy.entidad.Producto;
+import com.easy.entidad.Usuario;
+import com.easy.util.Conexion;
+
+@WebService(serviceName = "ProductoWebService")
+public class ProductoWebService {
+	
+	
+	@WebMethod(operationName = "detalleProducto")
+    public Producto[] detalleProducto(@WebParam(name = "id_producto") String id_producto) {
+		ArrayList<Producto> list = new ArrayList<Producto>();
+		ResultSet rs = null;
+        Conexion db = new Conexion();
+        Connection cn = db.Conectar();
+    	try{
+			Statement st = cn.createStatement();
+			String sql="SELECT NOMBRE,DETALLE,VALOR,STOCK,FOTO "
+					+ "FROM PRODUCTO WHERE ID_PRODUCTO = "+id_producto+"";
+			rs = st.executeQuery(sql);
+			while(rs.next()){
+				Producto pr = new Producto();
+				pr.setNombre(rs.getString(1));
+				pr.setDetalle(rs.getString(2));
+				pr.setValor(rs.getString(3));
+				pr.setStock(Integer.parseInt(rs.getString(4)));
+				pr.setFoto(rs.getBytes(5));
+				list.add(pr);
+				//Pruebas Error
+        		System.out.println("Producto Detalle Ok "+ id_producto+"");
+			}
+		}catch(SQLException ex){
+			//Pruebas Error
+			System.out.println("fallo en el try producto detalle");
+        	ex.printStackTrace();
+		}
+    	return (Producto[])list.toArray(new Producto[list.size()]);
+    }
+	//MANDA TODAS LAS BOLETAS ASOCIADAS AL RUT
+	@WebMethod(operationName = "boletas")
+    public Boleta[] boletas(@WebParam(name = "rut") String rut) {
+		ArrayList<Boleta> list = new ArrayList<Boleta>();
+		ResultSet rs = null;
+        Conexion db = new Conexion();
+        Connection cn = db.Conectar();
+    	try{
+			Statement st = cn.createStatement();
+			String sql="SELECT RUT_USER,ID_BOLETA,ID_SUCURSAL,TOTAL,FECHA "
+					+ "FROM BOLETA WHERE RUT_USER = '"+rut+"'";
+			rs = st.executeQuery(sql);
+			while(rs.next()){
+				Boleta bl = new Boleta();
+				bl.setRut(Integer.parseInt(rs.getString(1)));
+				bl.setIdBoleta(Integer.parseInt(rs.getString(2)));
+				bl.setIdSucursal(Integer.parseInt(rs.getString(3)));
+				bl.setTotal(Integer.parseInt(rs.getString(4)));
+				bl.setFecha(rs.getString(5));
+				list.add(bl);
+				//Pruebas Error
+        		System.out.println("Boletas "+	rut+"");
+			}
+		}catch(SQLException ex){
+			//Pruebas Error
+			System.out.println("fallo en el try producto detalle");
+        	ex.printStackTrace();
+		}
+    	return (Boleta[])list.toArray(new Boleta[list.size()]);
+    }
+	//
+	@WebMethod(operationName = "agregarBoleta")
+    public String agregarBoleta(@WebParam(name = "rut") String rut,@WebParam(name="total")int total) {
+		int resultado = 1;
+		ResultSet rs= null;
+		String id_boleta= null;
+        Conexion db = new Conexion();
+        Connection cn = db.Conectar();
+        Statement st = cn.createStatement();
+    	try{
+			String sql="INSERT INTO BOLETA (RUT_USER,TOTAL,FECHA)VALUES("+rut+","+total+",GETDATE())";
+	        st.executeUpdate(sql);
+	        resultado=0;
+	        st.close();
+	        	//pruebas por consola
+	        System.out.println("Usuario Ingresado");
+	    }catch(SQLException ex){
+	        ex.printStackTrace();
+	        resultado=1;
+	        	//pruebas por consola
+	        System.out.println("Error al insertar el usuario");
+	    }
+	    if(resultado == 0){
+	    	String sql = "SELECT ID_BOLETA FROM BOLETA WHERE RUT_USER ="+rut+""
+	    			+ "ORDER BY ID_BOLETA DESC";
+	    	try {
+				st.executeQuery(sql);
+				while(rs.next()){
+		    		id_boleta = rs.getString("ID_BOLETA");
+		    		return id_boleta;
+		    	}
+				System.out.println("La boleta agregada es "+id_boleta+"");
+			} catch (SQLException e) {
+				System.out.println("La boleta agregada es "+id_boleta+"");
+				e.printStackTrace();
+			}
+	    }else{
+	    	id_boleta = "No se pudo agregar su boleta profavor intente mas tarde";
+	    	System.out.println("Se callo en el IF");
+	    	return id_boleta;
+	    }
+	    return id_boleta;
+    }
+}

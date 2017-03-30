@@ -1,0 +1,26 @@
+222.186.21.195 - - [02/Jul/2016:00:19:44 -0400] "GET / HTTP/1.1" 404 961
+115.230.124.164 - - [02/Jul/2016:01:14:58 -0400] "GET /cgi-bin/common/attr?id=260714&r=0.0656196664304116 HTTP/1.1" 404 999
+198.55.103.208 - - [02/Jul/2016:01:55:34 -0400] "GET /manager/html HTTP/1.1" 404 985
+91.236.75.4 - - [02/Jul/2016:05:28:26 -0400] "GET /reader/about/ HTTP/1.1" 404 987
+115.230.124.164 - - [02/Jul/2016:05:47:35 -0400] "GET /cgi-bin/common/attr?id=260714&r=0.7188325858990101 HTTP/1.1" 404 999
+115.230.125.146 - - [02/Jul/2016:06:22:44 -0400] "GET /cgi-bin/common/attr?id=260714&r=0.9958350649885965 HTTP/1.1" 404 999
+222.186.21.195 - - [02/Jul/2016:07:05:21 -0400] "GET / HTTP/1.1" 404 961
+110.173.20.176 - - [02/Jul/2016:11:04:42 -0400] "GET /manager/html HTTP/1.1" 404 985
+106.168.233.26 - - [02/Jul/2016:11:42:25 -0400] "GET /cgi-bin/authLogin.cgi HTTP/1.1" 404 1003
+106.168.233.26 - - [02/Jul/2016:11:42:25 -0400] "  " 400 -
+222.186.21.195 - - [02/Jul/2016:14:08:56 -0400] "GET / HTTP/1.1" 404 961
+115.230.124.164 - - [02/Jul/2016:14:48:45 -0400] "GET /cgi-bin/common/attr?id=260714&r=0.9224264859934753 HTTP/1.1" 404 999
+0:0:0:0:0:0:0:1 - - [02/Jul/2016:16:53:17 -0400] "POST /EasyMart/pedidos.jsp HTTP/1.1" 200 2754
+0:0:0:0:0:0:0:1 - - [02/Jul/2016:16:53:17 -0400] "GET /EasyMart/librerias/css/menuCssResponsive.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [02/Jul/2016:16:53:17 -0400] "GET /EasyMart/librerias/css/tabla.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [02/Jul/2016:16:53:19 -0400] "POST /EasyMart/pedidos.jsp HTTP/1.1" 200 2754
+115.230.125.146 - - [02/Jul/2016:19:14:53 -0400] "GET /cgi-bin/common/attr?id=260714&r=0.0425743661062904 HTTP/1.1" 404 999
+115.230.124.164 - - [02/Jul/2016:19:22:18 -0400] "GET /cgi-bin/common/attr?id=260714&r=0.7969987913735390 HTTP/1.1" 404 999
+222.186.21.195 - - [02/Jul/2016:20:30:03 -0400] "GET / HTTP/1.1" 404 961
+190.100.247.8 - - [02/Jul/2016:20:59:30 -0400] "POST /EasyMart/services/UsuarioWebService?wsdl HTTP/1.1" 200 279
+190.100.247.8 - - [02/Jul/2016:20:59:42 -0400] "POST /EasyMart/services/ProductoWebService?wsdl HTTP/1.1" 200 17714
+190.100.247.8 - - [02/Jul/2016:21:00:02 -0400] "POST /EasyMart/services/ProductoWebService?wsdl HTTP/1.1" 200 282
+190.100.247.8 - - [02/Jul/2016:21:00:02 -0400] "POST /EasyMart/services/ProductoWebService?wsdl HTTP/1.1" 200 296
+190.100.247.8 - - [02/Jul/2016:21:00:02 -0400] "POST /EasyMart/services/ProductoWebService?wsdl HTTP/1.1" 200 599
+190.100.247.8 - - [02/Jul/2016:21:00:21 -0400] "POST /EasyMart/services/ProductoWebService?wsdl HTTP/1.1" 200 280
+0:0:0:0:0:0:0:1 - - [02/Jul/2016:23:01:59 -0400] "POST /EasyMart/pedidos.jsp HTTP/1.1" 200 3130

@@ -1,0 +1,174 @@
+<%@page import="java.util.Date"%>
+<%@page import="com.easy.util.Conexion"%>
+<%@page import="java.util.Calendar" %>
+<%@ page import="java.io.*,java.util.*,java.net.*,java.sql.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+	   	<meta charset='utf-8'>
+   		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+   		<meta name="viewport" content="width=device-width, initial-scale=1">
+   		<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   		<script src="librerias/js/script.js"></script>
+   		<link rel="stylesheet" media="(max-width:3000px)" href = "librerias/css/menuCssResponsive.css" type = "text/css">
+		<link rel="stylesheet" href = "librerias/css/tablas-reponsivas.css" type = "text/css">
+		<link href="librerias/css/styleAgregar.css" rel="stylesheet">
+
+<title>Home</title>
+<script>function validar()
+	  {
+		  var rut = document.forms.formulario.RUT;
+		  var nom = document.forms.formulario.NOMBRE;
+		  var cor = document.forms.formulario.CORREO;
+		  var pass = document.forms.formulario.PASSWRD
+		  var dir = document.forms.formulario.DIRECCION;	  
+		  var tel = document.forms.formulario.TELEFONO;
+			
+		  	if(rut.value.length>0)
+	        {
+	            rut.style.borderColor="#808080";
+	            var rutOk=true;
+	        }else{
+	            rut.style.borderColor="#ff0000";
+	            var rutOk=false;
+	        }
+		  	if(nom.value.length>0)
+	        {
+	            nom.style.borderColor="#808080";
+	            var nombreOk=true;
+	        }else{
+	            nom.style.borderColor="#ff0000";
+	            var nombreOk=false;
+	        }
+	 		
+	        if(cor.value.length>0)
+	        {
+	            cor.style.borderColor="#808080";
+	            var corOk=true;
+	        }else{
+	            cor.style.borderColor="#ff0000";
+	            var corOk=false;
+	        }
+	        if(dir.value.length>0)
+	        {
+	            dir.style.borderColor="#808080";
+	            var dirOk=true;
+	        }else{
+	            dir.style.borderColor="#ff0000";
+	            var dirOk=false;
+	        }
+	        if(pass.value.length>0)
+	        {
+	            pass.style.borderColor="#808080";
+	            var passOK=true;
+	        }else{
+	            pass.style.borderColor="#ff0000";
+	            var passOK=false;
+	        }
+	        if(tel.value.length>0)
+	        {
+	            tel.style.borderColor="#808080";
+	            var userOk=true;
+	        }else{
+	            tel.style.borderColor="#ff0000";
+	            var telOK=false;
+	        }
+
+	        if(nombreOk && corOk && dirOk && passOk && telOK)
+	        	
+	            return true;
+	        return false;
+		}
+		</script>
+
+
+	</head>
+<body>
+<center>
+<div class="">
+	<a href="index.html"><img width="25%" src="librerias/img/easymart.png"></a>
+</div>
+</center>
+
+<%
+Connection canal = null;
+ResultSet tabla= null;
+Statement instruccion=null;
+Conexion db = new Conexion();
+Connection cn = db.Conectar();
+canal = cn;
+
+	if(request.getParameter("OK") != null)
+	{
+// objetos de enlace
+	try {
+		instruccion = canal.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+		ResultSet.CONCUR_UPDATABLE);
+	}catch(SQLException e) {};
+//cargando los campos a grabar
+// excepto clave porque en mysql es de tipo auto-increment
+//ID_TIPOEMPLEADO,ID_SUCURSAL,NOMBRE,CORREO,RUT,DIRECCION,TELEFONO,PASSWRD,USUARIO
+
+		int rut = Integer.parseInt(request.getParameter("RUT"));
+		String nom = request.getParameter("NOMBRE");
+		String cor = request.getParameter("CORREO");
+		String pass = request.getParameter("PASSWRD");
+		String dir = request.getParameter("DIRECCION");
+		int tel = Integer.parseInt(request.getParameter("TELEFONO"));
+
+String q="INSERT INTO USUARIO(RUT_USER,NOMBRE,CORREO,PASSWRD,DIRECCION,TELEFONO) VALUES("+rut+",'"+nom+"','"+cor+"','"+pass+"','"+dir+"',"+tel+")";
+
+try {
+// agregando renglon (insert)
+int n=instruccion.executeUpdate(q);
+//avisando que se hizo la instruccion
+%>
+<script>alert("USUARIO INSERTADO")</script>
+<%
+
+} catch(SQLException e) {out.println(e);};
+try{
+
+// tabla.close();
+instruccion.close();
+canal.close();
+} catch(SQLException e) {out.println(e);};
+};
+
+out.println("<FORM id=contact-form ACTION=usuario.jsp METHOD=post name=formulario onsubmit=return validar();>");
+out.println("RUT:<INPUT TYPE=TEXT NAME=RUT onChange=validarN(this.value);><BR>");
+out.println("Nombre:<INPUT TYPE=TEXT NAME=NOMBRE onkeyup=validar();><BR>");
+out.println("Email:<INPUT TYPE=TEXT NAME=CORREO onkeyup=validar();><BR>");
+out.println("Password:<INPUT TYPE=password NAME=PASSWRD onkeyup=validar();><BR>");
+out.println("Direccion:<INPUT TYPE=TEXT NAME=DIRECCION onkeyup=validar();><BR>");
+out.println("Telefono:<INPUT TYPE=TEXT NAME=TELEFONO onChange=validarN(this.value);><BR>");
+
+%>
+</TD><BR>
+<input type="submit" name="OK" value="Agregar" style="
+    cursor: pointer;
+    width:100%;
+    border:none;
+    background: #272526;
+    background-image:linear-gradient(bottom, #8C1C50 0%, #991D57 52%);
+    background-image:-moz-linear-gradient(bottom, #8C1C50 0%, #991D57 52%);
+    background-image: -webkit-linear-gradient(bottom, #686D6F 0%, #000000 52%);
+    color:#FFF;
+    margin:0 0 5px;
+    padding:10px;
+    border-radius:5px;
+    top: 10px;
+    position: inherit; onclick=validacion()">
+
+<%
+out.println("</FORM>");
+%>
+	<script>
+	  function validarN(numero){
+	    if (!/^([0-9])*$/.test(numero))
+	      alert("El valor " + numero + " no es un número");
+	  }
+	  
+	</script>
+	<script src="librerias/js/scripts.js"></script>
+</html>

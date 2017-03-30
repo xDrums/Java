@@ -1,0 +1,150 @@
+package com.easy.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+import com.easy.entidad.Boleta;
+import com.easy.entidad.Boleta_pro;
+import com.easy.entidad.Producto;
+import com.easy.entidad.Usuario;
+import com.easy.util.Conexion;
+
+@WebService(serviceName = "ProductoWebService")
+public class ProductoWebService {
+	
+	
+	@WebMethod(operationName = "detalleProducto")
+    public Producto[] detalleProducto(@WebParam(name = "id_producto") String id_producto) {
+		ArrayList<Producto> list = new ArrayList<Producto>();
+		ResultSet rs = null;
+        Conexion db = new Conexion();
+        Connection cn = db.Conectar();
+    	try{
+			Statement st = cn.createStatement();
+			String sql="SELECT NOMBRE,DETALLE,VALOR,STOCK,FOTO "
+					+ "FROM PRODUCTO WHERE ID_PRODUCTO = "+id_producto+"";
+			rs = st.executeQuery(sql);
+			while(rs.next()){
+				Producto pr = new Producto();
+				pr.setNombre(rs.getString(1));
+				pr.setDetalle(rs.getString(2));
+				pr.setValor(rs.getString(3));
+				pr.setStock(Integer.parseInt(rs.getString(4)));
+				pr.setFoto(rs.getBytes(5));
+				list.add(pr);
+				//Pruebas Error
+        		System.out.println("Producto Detalle Ok "+ id_producto+"");
+			}
+		}catch(SQLException ex){
+			//Pruebas Error
+			System.out.println("fallo en el try producto detalle");
+        	ex.printStackTrace();
+		}
+    	return (Producto[])list.toArray(new Producto[list.size()]);
+    }
+	
+	@WebMethod(operationName = "boletas")
+    public Boleta[] boletas(@WebParam(name = "rut") String rut) {
+		ArrayList<Boleta> list = new ArrayList<Boleta>();
+		ResultSet rs = null;
+        Conexion db = new Conexion();
+        Connection cn = db.Conectar();
+    	try{
+			Statement st = cn.createStatement();
+			String sql="SELECT RUT_USER,ID_BOLETA,ID_SUCURSAL,TOTAL,FECHA "
+					+ "FROM BOLETA WHERE RUT_USER = '"+rut+"'";
+			rs = st.executeQuery(sql);
+			while(rs.next()){
+				Boleta bl = new Boleta();
+				bl.setRut(Integer.parseInt(rs.getString(1)));
+				bl.setIdBoleta(Integer.parseInt(rs.getString(2)));
+				//bl.setIdSucursal(Integer.parseInt(rs.getString(3)));
+				bl.setTotal(Integer.parseInt(rs.getString(4)));
+				bl.setFecha(rs.getString(5));
+				list.add(bl);
+				//Pruebas Error
+        		System.out.println("Boletas "+	rut+"");
+			}
+		}catch(SQLException ex){
+			//Pruebas Error
+			System.out.println("fallo en el try producto detalle");
+        	ex.printStackTrace();
+		}
+    	return (Boleta[])list.toArray(new Boleta[list.size()]);
+    }
+	
+	@WebMethod(operationName = "agregarBoleta")
+    public int agregarBoleta(@WebParam(name = "rut") String rut,@WebParam(name = "total") int total)
+	{
+		int resultado = 0;
+        Conexion db = new Conexion();
+        Connection cn = db.Conectar();
+    	try{
+    		Statement st = cn.createStatement();
+    		// SE CAE SE DEJA EN 0 PARA PODER CREAR UNA BOLETA 
+			String sql="INSERT INTO BOLETA (RUT_USER,TOTAL,FECHA)VALUES("+rut+","+total+",GETDATE())";
+	        st.executeUpdate(sql);
+	        resultado=1;
+	        st.close();
+	        	//pruebas por consola
+	        System.out.println("Inserto Boleta");
+	    }catch(SQLException ex){
+	        ex.printStackTrace();
+	        resultado=0;
+	        	//pruebas por consola
+	        System.out.println("Error al insertar el Boleta");
+	    }
+    	return resultado;
+	}
+	
+	@WebMethod(operationName = "selectBoleta")
+    public Boleta[] selectBoleta(@WebParam(name = "rut") int rut,@WebParam(name="producto")ArrayList<Boleta_pro> x) {
+		ArrayList<Boleta> list = new ArrayList<Boleta>();
+        Conexion db = new Conexion();
+        Connection cn = db.Conectar();
+        int boleta = 0;
+        int resultado = 0;
+        String sql = "SELECT TOP 1 ID_BOLETA,FECHA FROM BOLETA WHERE RUT_USER = "+rut+" ORDER BY ID_BOLETA DESC";
+    	try {
+    		ResultSet rs= null;
+    		Statement st = cn.createStatement();
+			rs = st.executeQuery(sql);	
+			while(rs.next()){
+				Boleta bl = new Boleta();
+	    		bl.setIdBoleta(Integer.parseInt(rs.getString(1)));
+	    		bl.setFecha(rs.getString(2));
+	    		list.add(bl);
+	    		boleta = bl.getIdBoleta();
+	    		resultado = 1;
+	    	}
+		}
+    	catch (SQLException e) {
+			System.out.println("La boleta agregada es "+rut+"");
+			resultado = 0;
+			e.printStackTrace();
+		}
+    	if(resultado==1){
+    		for(int i=0;i<x.size();i++){
+    			//String sql2="INSERT INTO BOLETA_PRO VALUES("+boleta+",?,?)";
+    			System.out.println(i);
+    		}
+    	}
+    	return (Boleta[])list.toArray(new Boleta[list.size()]);
+	}
+	@WebMethod(operationName = "insertBoletaProducto")
+	public int insertBoletaProducto(@WebParam(name="producto") ArrayList<Boleta_pro> x){
+		int resultado=1;
+		
+		return resultado;
+	}
+
+}
